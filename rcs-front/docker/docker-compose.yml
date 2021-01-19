@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  ws-scrcpy:
+    image: wsscrcpy
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+    privileged: true
+
+  frps:
+    build:
+      context: frps
+    restart: unless-stopped
+    ports:
+      - 20545:20545
+      - 27609:27609

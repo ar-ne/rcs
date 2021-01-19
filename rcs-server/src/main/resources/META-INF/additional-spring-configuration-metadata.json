@@ -1,0 +1,50 @@
+{
+  "properties": [
+    {
+      "name": "forward.server.port",
+      "type": "java.lang.Integer",
+      "description": "Description for forward.port.",
+      "defaultValue": 20545
+    },
+    {
+      "name": "forward.server.type",
+      "type": "java.lang.String",
+      "description": "Description for forward.server.type.",
+      "defaultValue": "frp"
+    },
+    {
+      "name": "device.connection.heartbeat.ttl",
+      "type": "java.lang.Integer",
+      "description": "ttl of a client heartbeat in millisecond."
+    },
+    {
+      "name": "forward.server.frps.token",
+      "type": "java.lang.String",
+      "description": "fps auth token."
+    },
+    {
+      "name": "forward.server.frp.api_port",
+      "type": "java.lang.String",
+      "description": "frp api port."
+    }
+  ],
+  "hints": [
+    {
+      "name": "forward.server.type",
+      "values": [
+        {
+          "value": "tcp",
+          "description": "use bio tcp method."
+        },
+        {
+          "value": "frp",
+          "description": "use in-docker frp server."
+        },
+        {
+          "value": "unmanaged-frp",
+          "description": "don't use managed forward server."
+        }
+      ]
+    }
+  ]
+}

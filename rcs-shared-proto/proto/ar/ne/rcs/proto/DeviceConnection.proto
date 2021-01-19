@@ -1,0 +1,25 @@
+syntax = "proto3";
+option java_package = 'ar.ne.rcs.proto';
+
+import "google/protobuf/timestamp.proto";
+import "ar/ne/rcs/proto/RCS.proto";
+
+enum HeartbeatSide{
+  HOST = 0;
+  CLIENT = 1;
+}
+
+message Heartbeat{
+  string token = 1;
+}
+
+enum LoginResult{
+  ACCEPT = 0;
+  REJECT = 1;
+}
+
+message LoginResponse{
+  LoginResult result = 1;
+  string token = 2;
+  int64 heartbeat_interval = 3;
+}

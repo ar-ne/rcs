@@ -1,0 +1,10 @@
+{
+  "name": "rcs-front",
+  "version": "1.0.0",
+  "license": "",
+  "private": "true",
+  "workspaces": [
+    "app",
+    "ws-scrcpy"
+  ]
+}

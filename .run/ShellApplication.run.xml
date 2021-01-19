@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+    <configuration name="ShellApplication" default="false" factoryName="Spring Boot" singleton="false"
+        type="SpringBootApplicationConfigurationType">
+        <module name="rcs.rcs-server" />
+        <option name="SPRING_BOOT_MAIN_CLASS" value="ar.ne.rcs.server.ServerApplication" />
+        <option name="DEBUG_MODE" value="true" />
+        <option name="HIDE_BANNER" value="true" />
+        <option name="ALTERNATIVE_JRE_PATH" />
+        <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndTriggerFile" />
+        <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+        <method v="2">
+            <option name="Make" enabled="true" />
+        </method>
+    </configuration>
+</component>
