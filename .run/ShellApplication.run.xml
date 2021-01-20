@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-    <configuration name="ShellApplication" default="false" factoryName="Spring Boot" singleton="false"
+    <configuration name="ShellApplication" default="false" factoryName="Spring Boot" singleton="true"
         type="SpringBootApplicationConfigurationType">
         <module name="rcs.rcs-server" />
         <option name="SPRING_BOOT_MAIN_CLASS" value="ar.ne.rcs.server.ServerApplication" />

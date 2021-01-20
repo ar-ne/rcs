@@ -1,4 +1,4 @@
-package ar.ne.rcs.server.utils;
+package ar.ne.rcs.server.dbKey;
 
 public class RedisK {
     public static final String DEVICE_LOGIN_RECORD = "DEVICE_LOGIN_RECORD";

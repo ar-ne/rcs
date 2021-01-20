@@ -25,9 +25,11 @@ dependencies {
     implementation project(path: ':rcs-shared')
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'de.codecentric:spring-boot-admin-starter-client'
     implementation 'it.ozimov:embedded-redis:0.7.2'
+    implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
     implementation 'org.springdoc:springdoc-openapi-ui:1.5.2'
     implementation 'org.springframework.integration:spring-integration-ip:5.4.2'
     implementation 'com.google.code.gson:gson:2.8.6'

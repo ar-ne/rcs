@@ -6,3 +6,4 @@ build
 /rcs-front/node_modules/
 /rcs-front/yarn-error.log
 /rcs-front/yarn.lock
+/dbFiles/

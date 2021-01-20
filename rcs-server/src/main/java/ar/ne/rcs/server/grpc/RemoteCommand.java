@@ -2,25 +2,23 @@ package ar.ne.rcs.server.grpc;
 
 import ar.ne.rcs.proto.RCS;
 import ar.ne.rcs.proto.server.RemoteCommandGrpc;
-import com.google.protobuf.Empty;
+import ar.ne.rcs.server.repo.DeviceRepo;
 import io.grpc.stub.StreamObserver;
+import lombok.extern.slf4j.Slf4j;
+import org.lognet.springboot.grpc.GRpcService;
 
-import java.util.concurrent.ConcurrentHashMap;
-
+@Slf4j
+@GRpcService
 public class RemoteCommand extends RemoteCommandGrpc.RemoteCommandImplBase {
-    public static final ConcurrentHashMap<RCS.DeviceDescription, StreamObserver<RCS.Command>> deviceMap = new ConcurrentHashMap<>();
 
-    @Override
-    public void list(Empty request, StreamObserver<RCS.Command> responseObserver) {
+    final DeviceRepo repo;
+
+    public RemoteCommand(DeviceRepo repo) {
+        this.repo = repo;
     }
 
     @Override
-    public void submit(RCS.CommandResult request, StreamObserver<Empty> responseObserver) {
-        super.submit(request, responseObserver);
-    }
-
-    @Override
-    public StreamObserver<RCS.CommandResult> outputStreaming(StreamObserver<Empty> responseObserver) {
-        return super.outputStreaming(responseObserver);
+    public void list(RCS.Token request, StreamObserver<RCS.Command> responseObserver) {
+        repo.startListing(request.getToken(), responseObserver);
     }
 }

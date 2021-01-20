@@ -4,6 +4,7 @@ import ar.ne.rcs.client.Cronjob;
 import ar.ne.rcs.proto.DeviceConnection;
 import ar.ne.rcs.proto.RCS;
 import ar.ne.rcs.proto.server.DeviceConnectionGrpc;
+import ar.ne.rcs.proto.server.RemoteCommandGrpc;
 import com.google.protobuf.Empty;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -24,9 +25,18 @@ public class GRpcClient {
         connect();
     }
 
+    public ManagedChannel getChannel() {
+        return channel;
+    }
+
+    public DeviceConnection.LoginResponse getLoginResponse() {
+        return loginResponse;
+    }
+
     private void connect() {
         login();
         beats();
+        listCMD();
     }
 
     public void login() {
@@ -54,8 +64,26 @@ public class GRpcClient {
             }
         });
         new Cronjob(loginResponse.getHeartbeatInterval(), () -> {
-            beat.onNext(DeviceConnection.Heartbeat.newBuilder().setToken(loginResponse.getToken()).build());
+            beat.onNext(DeviceConnection.Heartbeat.newBuilder().setToken(loginResponse.getToken().getToken()).build());
         });
+    }
 
+    public void listCMD() {
+        RemoteCommandGrpc.RemoteCommandStub stub = RemoteCommandGrpc.newStub(channel);
+        stub.list(loginResponse.getToken(), new StreamObserver<RCS.Command>() {
+            @Override
+            public void onNext(RCS.Command value) {
+                log.info("New command: {}", value.toString());
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                t.printStackTrace();
+            }
+
+            @Override
+            public void onCompleted() {
+            }
+        });
     }
 }

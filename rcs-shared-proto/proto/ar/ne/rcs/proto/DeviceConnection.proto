@@ -20,6 +20,6 @@ enum LoginResult{
 
 message LoginResponse{
   LoginResult result = 1;
-  string token = 2;
+  Token token = 2;
   int64 heartbeat_interval = 3;
 }

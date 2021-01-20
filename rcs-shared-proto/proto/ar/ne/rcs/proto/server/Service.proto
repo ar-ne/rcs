@@ -15,11 +15,8 @@ service DeviceConnection{
 
 service RemoteCommand{
   //fetch commands
-  rpc list (DeviceDescription) returns (stream Command);
+  rpc list (Token) returns (stream Command);
 
-  //submit exec result
-  rpc submit (CommandResult) returns (google.protobuf.Empty);
-
-  //when running as a service, stream output to server
-  rpc outputStreaming (stream CommandResult) returns (google.protobuf.Empty);
+  //submit output
+  rpc submit (stream CommandResult) returns (stream google.protobuf.Empty);
 }
