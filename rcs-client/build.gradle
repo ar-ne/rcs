@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.4.1'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
-    id "com.google.protobuf" version "0.8.14"
 }
 
 group = 'ar.ne.rcs'
@@ -23,56 +22,8 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-
-    implementation 'io.grpc:grpc-okhttp:1.35.0'
-    implementation 'io.grpc:grpc-protobuf-lite:1.35.0'
-    implementation 'io.grpc:grpc-stub:1.35.0'
-    implementation 'com.google.protobuf:protobuf-javalite:3.8.0'
-    compileOnly 'org.apache.tomcat:annotations-api:6.0.53' // necessary for Java 9+
 }
 
 test {
     useJUnitPlatform()
-}
-
-protobuf {
-    protoc {
-        artifact = 'com.google.protobuf:protoc:3.14.0'
-    }
-    plugins {
-        grpc {
-            artifact = 'io.grpc:protoc-gen-grpc-java:1.35.0'
-        }
-    }
-
-    generateProtoTasks {
-        all().each { task ->
-            task.builtins {
-                task.doFirst {
-                    delete(task.outputs)
-                }
-                java {
-                    outputSubDir = 'java'
-                    option "lite"
-                }
-            }
-            task.plugins {
-                grpc {
-                    outputSubDir = 'java'
-                    option "lite"
-                }
-            }
-        }
-    }
-}
-
-sourceSets {
-    main {
-        proto {
-            srcDir "${project(":rcs-shared-proto").projectDir}/proto"
-        }
-        java {
-            srcDir 'build/generated/source/proto/main/java'
-        }
-    }
 }
