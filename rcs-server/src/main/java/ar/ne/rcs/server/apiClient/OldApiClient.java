@@ -1,6 +1,7 @@
 package ar.ne.rcs.server.apiClient;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Map;
 
 /**

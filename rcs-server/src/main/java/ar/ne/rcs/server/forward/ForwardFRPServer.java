@@ -1,6 +1,6 @@
 package ar.ne.rcs.server.forward;
 
-import ar.ne.rcs.shared.models.frp.FRPServerConfig;
+import ar.ne.rcs.shared.models.frp.FRPServer;
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.BuildImageResultCallback;
 import com.github.dockerjava.api.command.CreateContainerResponse;
@@ -46,8 +46,8 @@ public class ForwardFRPServer extends AbstractForwardServer {
         try {
             tempDir = Files.createTempDirectory("rcs-server-frp");
             //write frps.ini
-            Files.write(tempDir.resolve("frps.ini"), FRPServerConfig.builder()
-                    .common(FRPServerConfig.Common.builder()
+            Files.write(tempDir.resolve("frps.ini"), FRPServer.builder()
+                    .common(FRPServer.Common.builder()
                             .token(token)
                             .build())
                     .build()
