@@ -28,6 +28,26 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+publishing {
+    publications {
+        bar(MavenPublication) {
+            groupId 'ar.ne.rcs'
+            artifactId 'rcs-android'
+            version '0.0.1-SNAPSHOT'
+            artifact "$buildDir/outputs/aar/rcs-android-release.aar"
+        }
+    }
+    repositories {
+        maven {
+            url "$buildDir/repo"
+        }
+    }
 }
 
 dependencies {
