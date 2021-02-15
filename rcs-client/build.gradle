@@ -2,10 +2,6 @@ plugins {
     id 'java'
 }
 
-group = 'ar.ne.rcs'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
-
 dependencies {
     implementation project(path: ':rcs-shared')
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
