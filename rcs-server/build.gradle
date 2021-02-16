@@ -53,3 +53,10 @@ dependencyManagement {
 test {
     useJUnitPlatform()
 }
+
+configurations {
+    [apiElements, runtimeElements].each {
+        it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
+        it.outgoing.artifact(bootJar)
+    }
+}

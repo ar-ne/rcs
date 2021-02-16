@@ -23,12 +23,30 @@ allprojects {
     }
 }
 
-subprojects{
+subprojects {
     apply plugin: 'maven-publish'
     group 'ar.ne.rcs'
     sourceCompatibility = 1.8 // java 8
     targetCompatibility = 1.8
     version = "0.0.1-SNAPSHOT"
+
+    task sourceJar(type: Jar) {
+        from sourceSets.main.allJava
+        archiveClassifier = "sources"
+    }
+
+
+    if (!["rcs-android"].contains(project.name)) {
+        println("add publiscation for $project.name")
+        apply plugin: 'java'
+        publishing {
+            publications {
+                "$project.name"(MavenPublication) {
+                    from components.java
+                }
+            }
+        }
+    }
 }
 
 group = 'ar.ne.rcs'

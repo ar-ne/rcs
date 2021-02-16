@@ -1,4 +1,7 @@
-apply plugin: 'com.android.library'
+plugins{
+    id 'com.android.library'
+    id 'digital.wup.android-maven-publish' version '3.6.2'
+}
 
 android {
     compileSdkVersion 28
@@ -31,22 +34,6 @@ android {
 
     lintOptions {
         abortOnError false
-    }
-}
-
-publishing {
-    publications {
-        bar(MavenPublication) {
-            groupId 'ar.ne.rcs'
-            artifactId 'rcs-android'
-            version '0.0.1-SNAPSHOT'
-            artifact "$buildDir/outputs/aar/rcs-android-release.aar"
-        }
-    }
-    repositories {
-        maven {
-            url "$buildDir/repo"
-        }
     }
 }
 
@@ -83,6 +70,10 @@ dependencies {
     implementation 'com.fasterxml.jackson.module:jackson-module-parameter-names:2.11.3'
 }
 
-publishBarPublicationToMavenLocal{
-    dependsOn build
+publishing {
+    publications {
+        mavenAar(MavenPublication) {
+            from components.android
+        }
+    }
 }
