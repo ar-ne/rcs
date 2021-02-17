@@ -3,7 +3,7 @@ package ar.ne.rcs.server.controller.rest;
 import ar.ne.rcs.server.serivce.JobService;
 import ar.ne.rcs.shared.models.common.RESTResult;
 import ar.ne.rcs.shared.models.device.DeviceIdentifier;
-import ar.ne.rcs.shared.models.store.JobStore;
+import ar.ne.rcs.shared.models.stores.JobStore;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.web.bind.annotation.*;
 

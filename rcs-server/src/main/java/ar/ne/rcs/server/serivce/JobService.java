@@ -4,7 +4,7 @@ import ar.ne.rcs.server.repo.JobRepo;
 import ar.ne.rcs.shared.consts.MessageDestination;
 import ar.ne.rcs.shared.models.device.DeviceIdentifier;
 import ar.ne.rcs.shared.models.rc.ResultPartial;
-import ar.ne.rcs.shared.models.store.JobStore;
+import ar.ne.rcs.shared.models.stores.JobStore;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 

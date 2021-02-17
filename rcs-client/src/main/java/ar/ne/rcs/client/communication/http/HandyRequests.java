@@ -1,6 +1,6 @@
 package ar.ne.rcs.client.communication.http;
 
-import ar.ne.rcs.client.communication.Config;
+import ar.ne.rcs.client.communication.HttpConfig;
 import ar.ne.rcs.shared.models.RemoteCommand;
 import ar.ne.rcs.shared.models.status.DeviceStatus;
 
@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class HandyRequests {
     private static String getUrl(String endpoint) throws RuntimeException {
-        return String.format("%s/%s", Config.getInstance().baseUrl, endpoint);
+        return String.format("%s/%s", HttpConfig.getInstance().baseUrl, endpoint);
     }
 
     public static int GetInterval() throws IOException {

@@ -2,10 +2,10 @@ package ar.ne.rcs.client.communication.ws;
 
 import ar.ne.rcs.client.RCSClient;
 import ar.ne.rcs.shared.consts.MessageDestination;
+import ar.ne.rcs.shared.enums.registration.RegistrationResult;
 import ar.ne.rcs.shared.models.device.DeviceIdentifier;
 import ar.ne.rcs.shared.models.rc.ResultPartial;
-import ar.ne.rcs.shared.models.registration.RegistrationResult;
-import ar.ne.rcs.shared.models.store.JobStore;
+import ar.ne.rcs.shared.models.stores.JobStore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.java.Log;
 

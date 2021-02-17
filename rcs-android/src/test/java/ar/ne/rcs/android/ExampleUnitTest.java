@@ -15,11 +15,24 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
     }
 
-    @Test
-    public void wsClientTest() throws InterruptedException {
-//        synchronized (this) {
-//            WSClient client = WSClient.init(new SPAConnection("ws://127.0.0.1:8080/ws/websocket"));
-//            this.wait();
-//        }
-    }
+//    @Test
+//    @SuppressWarnings("unchecked")
+//    public void clientTest() throws InterruptedException {
+//        RCSAndroidManager manager = new RCSAndroidManager(
+//                RCSAndroidConfigModel.builder()
+//                        .communicationConfig(
+//                                CommunicationConfigModel.builder()
+//                                        .deviceID("deviceId")
+//                                        .host("localhost")
+//                                        .port(8080)
+//                                        .httpEndpoint("/")
+//                                        .wsEndpoint("ws/websocket")
+//                                        .httpSSL(false)
+//                                        .wsSSL(false)
+//                                        .build()
+//                        )
+//                        .build()
+//        );
+//        manager.enableFeature(RemoteShell.class,);
+//    }
 }

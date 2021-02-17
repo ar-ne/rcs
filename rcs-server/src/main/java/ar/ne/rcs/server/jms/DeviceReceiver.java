@@ -2,7 +2,7 @@ package ar.ne.rcs.server.jms;
 
 import ar.ne.rcs.server.serivce.WSService;
 import ar.ne.rcs.shared.consts.MessageDestination;
-import ar.ne.rcs.shared.models.store.DeviceRegistration;
+import ar.ne.rcs.shared.models.stores.DeviceRegistration;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 

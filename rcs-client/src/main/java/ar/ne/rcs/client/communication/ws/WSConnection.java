@@ -1,12 +1,8 @@
 package ar.ne.rcs.client.communication.ws;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.util.function.Function;
 
 public abstract class WSConnection {
-    private static final ObjectMapper mapper = new ObjectMapper();
-
     protected String endpoint;
     protected Runnable onConnected;
     protected Runnable onError;

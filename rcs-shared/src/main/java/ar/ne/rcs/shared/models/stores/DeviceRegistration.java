@@ -1,4 +1,4 @@
-package ar.ne.rcs.shared.models.store;
+package ar.ne.rcs.shared.models.stores;
 
 import ar.ne.rcs.shared.models.device.DeviceIdentifier;
 import lombok.AllArgsConstructor;

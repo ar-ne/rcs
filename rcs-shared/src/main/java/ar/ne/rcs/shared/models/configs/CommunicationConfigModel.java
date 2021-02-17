@@ -1,11 +1,11 @@
-package ar.ne.rcs.shared.models.communication;
+package ar.ne.rcs.shared.models.configs;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class ConfigModel {
+public class CommunicationConfigModel {
     public String host;
     public int port;
     public String deviceID;

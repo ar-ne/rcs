@@ -2,7 +2,7 @@ package ar.ne.rcs.server.repo;
 
 import ar.ne.rcs.server.repo.mongo.MongoDeviceRegistrationRepo;
 import ar.ne.rcs.shared.models.device.DeviceIdentifier;
-import ar.ne.rcs.shared.models.store.DeviceRegistration;
+import ar.ne.rcs.shared.models.stores.DeviceRegistration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;

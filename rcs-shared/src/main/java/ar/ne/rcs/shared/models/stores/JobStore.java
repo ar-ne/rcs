@@ -1,4 +1,4 @@
-package ar.ne.rcs.shared.models.store;
+package ar.ne.rcs.shared.models.stores;
 
 import ar.ne.rcs.shared.models.rc.Job;
 import ar.ne.rcs.shared.models.rc.JobMetadata;

@@ -1,4 +1,4 @@
-package ar.ne.rcs.android;
+package ar.ne.rcs.android.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

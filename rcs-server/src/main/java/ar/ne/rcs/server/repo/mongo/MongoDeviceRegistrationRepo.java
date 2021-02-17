@@ -1,6 +1,6 @@
 package ar.ne.rcs.server.repo.mongo;
 
-import ar.ne.rcs.shared.models.store.DeviceRegistration;
+import ar.ne.rcs.shared.models.stores.DeviceRegistration;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

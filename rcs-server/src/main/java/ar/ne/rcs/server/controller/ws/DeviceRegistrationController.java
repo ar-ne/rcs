@@ -2,8 +2,8 @@ package ar.ne.rcs.server.controller.ws;
 
 import ar.ne.rcs.server.serivce.DeviceRegistrationService;
 import ar.ne.rcs.shared.consts.MessageDestination;
+import ar.ne.rcs.shared.enums.registration.RegistrationResult;
 import ar.ne.rcs.shared.models.device.DeviceIdentifier;
-import ar.ne.rcs.shared.models.registration.RegistrationResult;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;

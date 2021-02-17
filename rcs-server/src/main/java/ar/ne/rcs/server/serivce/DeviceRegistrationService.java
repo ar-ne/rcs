@@ -3,7 +3,7 @@ package ar.ne.rcs.server.serivce;
 import ar.ne.rcs.server.repo.DeviceRegistrationRepo;
 import ar.ne.rcs.shared.consts.MessageDestination;
 import ar.ne.rcs.shared.models.device.DeviceIdentifier;
-import ar.ne.rcs.shared.models.store.DeviceRegistration;
+import ar.ne.rcs.shared.models.stores.DeviceRegistration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;

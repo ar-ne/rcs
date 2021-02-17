@@ -6,7 +6,7 @@ import ar.ne.rcs.shared.models.rc.Job;
 import ar.ne.rcs.shared.models.rc.JobMetadata;
 import ar.ne.rcs.shared.models.rc.JobStatus;
 import ar.ne.rcs.shared.models.rc.ResultPartial;
-import ar.ne.rcs.shared.models.store.JobStore;
+import ar.ne.rcs.shared.models.stores.JobStore;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;

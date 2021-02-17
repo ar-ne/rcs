@@ -1,4 +1,4 @@
-package ar.ne.rcs.android;
+package ar.ne.rcs.android.utils;
 
 import ar.ne.rcs.client.communication.ws.WSConnection;
 import com.fasterxml.jackson.core.JsonProcessingException;

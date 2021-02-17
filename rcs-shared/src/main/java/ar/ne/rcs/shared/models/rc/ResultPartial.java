@@ -1,6 +1,6 @@
 package ar.ne.rcs.shared.models.rc;
 
-import ar.ne.rcs.shared.models.store.JobStore;
+import ar.ne.rcs.shared.models.stores.JobStore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

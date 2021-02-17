@@ -3,7 +3,7 @@ package ar.ne.rcs.server.jms;
 import ar.ne.rcs.server.serivce.JobService;
 import ar.ne.rcs.server.serivce.WSService;
 import ar.ne.rcs.shared.models.rc.ResultPartial;
-import ar.ne.rcs.shared.models.store.JobStore;
+import ar.ne.rcs.shared.models.stores.JobStore;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
