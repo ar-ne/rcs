@@ -5,7 +5,10 @@ import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import ar.ne.rcs.android.DPMReceiver;
-import ar.ne.rcs.android.RCSAndroidManager;
+import ar.ne.rcs.android.AndroidFeatureManager;
+import ar.ne.rcs.client.feature.Feature;
+import ar.ne.rcs.client.feature.FeatureConfigModel;
+import ar.ne.rcs.client.feature.RemoteShell;
 import ar.ne.rcs.client.utilities.shell.Result;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +20,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Log
 public class EnterpriseManagement extends Feature<EnterpriseManagement.EnterpriseManagementConfigModel> {
 
-    protected EnterpriseManagement(RCSAndroidManager manager, EnterpriseManagementConfigModel enterpriseManagementConfigModel) {
+    protected EnterpriseManagement(AndroidFeatureManager manager, EnterpriseManagementConfigModel enterpriseManagementConfigModel) {
         super(manager, enterpriseManagementConfigModel);
     }
 
@@ -36,7 +39,7 @@ public class EnterpriseManagement extends Feature<EnterpriseManagement.Enterpris
     }
 
     @Override
-    Class<? extends Feature<EnterpriseManagementConfigModel>> getFeatureType() {
+    public Class<? extends Feature<EnterpriseManagementConfigModel>> getFeatureType() {
         return this.getClass();
     }
 

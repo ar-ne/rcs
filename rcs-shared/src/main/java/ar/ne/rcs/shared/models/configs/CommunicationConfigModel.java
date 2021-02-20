@@ -28,4 +28,8 @@ public class CommunicationConfigModel {
         if (httpSSL) protocol += "s";
         return String.format("%s://%s/%s", protocol, getAddress(), httpEndpoint);
     }
+
+    public String getWSUri() {
+        return String.format("%s://%s:%s/%s", wsSSL ? "wss" : "ws", host, port, wsEndpoint);
+    }
 }

@@ -1,6 +1,5 @@
 package ar.ne.rcs.shared.models.stores;
 
-import ar.ne.rcs.shared.models.device.DeviceIdentifier;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DeviceRegistration {
-    DeviceIdentifier identifier;
+    String deviceIdentifier;
     /**
      * last register time
      */

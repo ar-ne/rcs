@@ -1,6 +1,5 @@
 package ar.ne.rcs.shared.models.rc;
 
-import ar.ne.rcs.shared.models.device.DeviceIdentifier;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +17,7 @@ public class JobMetadata {
     Date endTime;
     @Builder.Default
     Date addTime = new Date();
-    DeviceIdentifier deviceIdentifier;
+    String deviceIdentifier;
     @Builder.Default
     Integer exitCode = null;
 }

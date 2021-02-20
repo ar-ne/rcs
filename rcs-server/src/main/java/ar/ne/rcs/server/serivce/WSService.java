@@ -1,6 +1,5 @@
 package ar.ne.rcs.server.serivce;
 
-import ar.ne.rcs.shared.models.device.DeviceIdentifier;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageType;
@@ -21,13 +20,13 @@ public class WSService {
         simpMessagingTemplate.convertAndSend(dest, payload);
     }
 
-    public void sendToUser(String sessionId, String dest, Object payload) {
+    public void sendToSession(String sessionId, String dest, Object payload) {
         simpMessagingTemplate.convertAndSendToUser(sessionId, "/topic/" + dest, payload, createHeaders(sessionId));
     }
 
-    public void sendToUser(DeviceIdentifier identifier, String dest, Object payload) {
+    public void sendToUser(String identifier, String dest, Object payload) {
         String sessionId = registrationService.findByIdentifier(identifier).getId();
-        sendToUser(sessionId, dest, payload);
+        sendToSession(sessionId, dest, payload);
     }
 
     //https://stackoverflow.com/questions/34929578/spring-websocket-sendtosession-send-message-to-specific-session

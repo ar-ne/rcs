@@ -2,7 +2,6 @@ package ar.ne.rcs.server.controller.rest;
 
 import ar.ne.rcs.server.serivce.JobService;
 import ar.ne.rcs.shared.models.common.RESTResult;
-import ar.ne.rcs.shared.models.device.DeviceIdentifier;
 import ar.ne.rcs.shared.models.stores.JobStore;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +21,7 @@ public class RCController {
 
 
     @PostMapping("create")
-    public RESTResult create(@RequestBody Request request) {
+    public RESTResult create(@RequestBody CreateDeviceRequest request) {
         service.create(request.command, request.identifier);
         return new RESTResult(200);
     }
@@ -32,8 +31,8 @@ public class RCController {
         return service.list();
     }
 
-    private static class Request {
+    private static class CreateDeviceRequest {
         public String command;
-        public DeviceIdentifier identifier;
+        public String identifier;
     }
 }

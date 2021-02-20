@@ -1,15 +1,13 @@
-package ar.ne.rcs.android.features;
-
-import ar.ne.rcs.android.RCSAndroidManager;
+package ar.ne.rcs.client.feature;
 
 import java.util.HashMap;
 
 public abstract class Feature<T extends FeatureConfigModel> {
     private static final HashMap<Class<? extends Feature<? extends FeatureConfigModel>>, Feature<? extends FeatureConfigModel>> features = new HashMap<>();
-    protected final RCSAndroidManager manager;
+    protected final FeatureManager manager;
     protected final T configModel;
 
-    protected Feature(RCSAndroidManager manager, T configModel) {
+    protected Feature(FeatureManager manager, T configModel) {
         this.manager = manager;
         this.configModel = configModel;
         register();
@@ -25,7 +23,7 @@ public abstract class Feature<T extends FeatureConfigModel> {
         return features.values().toArray(new Feature[0]);
     }
 
-    abstract Class<? extends Feature<? extends FeatureConfigModel>> getFeatureType();
+    public abstract Class<? extends Feature<? extends FeatureConfigModel>> getFeatureType();
 
     private void register() {
         features.put(getFeatureType(), this);

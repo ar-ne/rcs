@@ -1,4 +1,4 @@
-package ar.ne.rcs.android.features;
+package ar.ne.rcs.client.feature;
 
 import lombok.Data;
 

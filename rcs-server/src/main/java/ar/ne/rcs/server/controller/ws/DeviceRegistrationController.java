@@ -3,7 +3,6 @@ package ar.ne.rcs.server.controller.ws;
 import ar.ne.rcs.server.serivce.DeviceRegistrationService;
 import ar.ne.rcs.shared.consts.MessageDestination;
 import ar.ne.rcs.shared.enums.registration.RegistrationResult;
-import ar.ne.rcs.shared.models.device.DeviceIdentifier;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -23,7 +22,7 @@ public class DeviceRegistrationController {
 
     @MessageMapping(MessageDestination.Fields.DEVICE_REGISTRATION)
     @SendToUser("/topic/" + MessageDestination.Fields.DEVICE_REGISTRATION)
-    public RegistrationResult register(@Payload DeviceIdentifier identifier, @Header("simpSessionId") String sessionId) {
+    public RegistrationResult register(@Payload String identifier, @Header("simpSessionId") String sessionId) {
         //TODO: verify device
         service.register(identifier, sessionId);
         return RegistrationResult.ACCEPT;

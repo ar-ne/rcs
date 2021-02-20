@@ -1,18 +1,19 @@
-package ar.ne.rcs.android.features;
+package ar.ne.rcs.client.feature;
 
-import ar.ne.rcs.android.RCSAndroidManager;
 import ar.ne.rcs.client.utilities.shell.Executor;
 import lombok.Builder;
+
+import java.lang.reflect.InvocationTargetException;
 
 public class RemoteShell extends Feature<RemoteShell.RemoteShellConfigModel> {
 
     private Executor executor;
 
-    protected RemoteShell(RCSAndroidManager manager, RemoteShellConfigModel configModel) {
+    protected RemoteShell(FeatureManager manager, RemoteShellConfigModel configModel) {
         super(manager, configModel);
         try {
-            executor = configModel.executorClass.newInstance();
-        } catch (IllegalAccessException | InstantiationException e) {
+            executor = configModel.executorClass.getConstructor().newInstance();
+        } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
 
@@ -24,7 +25,7 @@ public class RemoteShell extends Feature<RemoteShell.RemoteShellConfigModel> {
     }
 
     @Override
-    Class<? extends Feature<RemoteShellConfigModel>> getFeatureType() {
+    public Class<? extends Feature<RemoteShellConfigModel>> getFeatureType() {
         return this.getClass();
     }
 

@@ -1,7 +1,6 @@
 package ar.ne.rcs.server.repo;
 
 import ar.ne.rcs.server.repo.mongo.MongoJobRepo;
-import ar.ne.rcs.shared.models.device.DeviceIdentifier;
 import ar.ne.rcs.shared.models.rc.Job;
 import ar.ne.rcs.shared.models.rc.JobMetadata;
 import ar.ne.rcs.shared.models.rc.JobStatus;
@@ -21,7 +20,7 @@ public class JobRepo {
         this.repo = repo;
     }
 
-    public JobStore create(String command, DeviceIdentifier identifier) {
+    public JobStore create(String command, String identifier) {
         String id = UUID.randomUUID().toString();
         JobStore store = JobStore.builder()
                 .id(id)

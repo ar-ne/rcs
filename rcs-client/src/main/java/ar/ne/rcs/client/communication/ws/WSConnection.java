@@ -8,10 +8,10 @@ public abstract class WSConnection {
     protected Runnable onError;
 
     /**
-     * @param endpoint the endpoint to connect, make sure it's a STOMP endpoint
+     * @param uri the uri to connect, make sure it's a STOMP uri
      */
-    public WSConnection(String endpoint) {
-        this.endpoint = endpoint;
+    public WSConnection(String uri) {
+        this.endpoint = uri;
     }
 
     /**

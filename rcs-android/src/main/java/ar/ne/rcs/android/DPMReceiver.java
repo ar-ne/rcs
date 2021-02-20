@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import ar.ne.rcs.android.features.EnterpriseManagement;
 
-import static ar.ne.rcs.android.RCSAndroidManager.MANAGER;
+import static ar.ne.rcs.android.AndroidFeatureManager.MANAGER;
 
 public abstract class DPMReceiver extends DeviceAdminReceiver {
     @Override

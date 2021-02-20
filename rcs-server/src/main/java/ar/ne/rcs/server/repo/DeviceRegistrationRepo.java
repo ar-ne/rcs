@@ -1,7 +1,6 @@
 package ar.ne.rcs.server.repo;
 
 import ar.ne.rcs.server.repo.mongo.MongoDeviceRegistrationRepo;
-import ar.ne.rcs.shared.models.device.DeviceIdentifier;
 import ar.ne.rcs.shared.models.stores.DeviceRegistration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -25,10 +24,10 @@ public class DeviceRegistrationRepo {
     }
 
 
-    public DeviceRegistration register(DeviceIdentifier identifier, String id) {
+    public DeviceRegistration register(String identifier, String id) {
         //TODO: broadcast device online
         DeviceRegistration reg = DeviceRegistration.builder()
-                .identifier(identifier)
+                .deviceIdentifier(identifier)
                 .id(id)
                 .build();
         DeviceRegistration regByIdentifier = findByDeviceIdentifier(identifier);
@@ -40,7 +39,7 @@ public class DeviceRegistrationRepo {
     }
 
     @Nullable
-    public DeviceRegistration findByDeviceIdentifier(DeviceIdentifier identifier) {
+    public DeviceRegistration findByDeviceIdentifier(String identifier) {
         return mongo.findOne(Query.query(where("identifier").is(identifier)), DeviceRegistration.class);
     }
 

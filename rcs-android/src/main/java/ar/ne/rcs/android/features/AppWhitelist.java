@@ -4,7 +4,9 @@ package ar.ne.rcs.android.features;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import ar.ne.rcs.android.RCSAndroidManager;
+import ar.ne.rcs.android.AndroidFeatureManager;
+import ar.ne.rcs.client.feature.Feature;
+import ar.ne.rcs.client.feature.FeatureConfigModel;
 import ar.ne.rcs.client.utilities.shell.Executor;
 import lombok.Builder;
 import lombok.Getter;
@@ -61,7 +63,7 @@ public class AppWhitelist extends Feature<AppWhitelist.AppWhitelistConfigModel> 
                             "com.android.inputservice",
                             "com.smdt.timing"));
 
-    protected AppWhitelist(RCSAndroidManager manager, AppWhitelistConfigModel configModel) {
+    protected AppWhitelist(AndroidFeatureManager manager, AppWhitelistConfigModel configModel) {
         super(manager, configModel);
         configModel.getAllowedPkg().addAll(INTERNAL_LIST);
 
@@ -108,7 +110,7 @@ public class AppWhitelist extends Feature<AppWhitelist.AppWhitelistConfigModel> 
     }
 
     @Override
-    Class<? extends Feature<? extends FeatureConfigModel>> getFeatureType() {
+    public Class<? extends Feature<? extends FeatureConfigModel>> getFeatureType() {
         return this.getClass();
     }
 

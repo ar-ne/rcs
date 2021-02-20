@@ -19,10 +19,10 @@ public class SPAConnection extends WSConnection {
 
 
     /**
-     * @param endpoint the endpoint to connect, make sure it's a STOMP endpoint
+     * @param uri the uri to connect, make sure it's a STOMP uri
      */
-    public SPAConnection(String endpoint) {
-        super(endpoint);
+    public SPAConnection(String uri) {
+        super(uri);
     }
 
     @Override
@@ -73,7 +73,6 @@ public class SPAConnection extends WSConnection {
         );
     }
 
-    //  TODO: add  @SneakyThrows
     @Override
     public void send(String dest, Object data) {
         try {

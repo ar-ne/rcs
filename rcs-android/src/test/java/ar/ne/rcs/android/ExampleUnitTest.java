@@ -14,25 +14,4 @@ public class ExampleUnitTest {
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
     }
-
-//    @Test
-//    @SuppressWarnings("unchecked")
-//    public void clientTest() throws InterruptedException {
-//        RCSAndroidManager manager = new RCSAndroidManager(
-//                RCSAndroidConfigModel.builder()
-//                        .communicationConfig(
-//                                CommunicationConfigModel.builder()
-//                                        .deviceID("deviceId")
-//                                        .host("localhost")
-//                                        .port(8080)
-//                                        .httpEndpoint("/")
-//                                        .wsEndpoint("ws/websocket")
-//                                        .httpSSL(false)
-//                                        .wsSSL(false)
-//                                        .build()
-//                        )
-//                        .build()
-//        );
-//        manager.enableFeature(RemoteShell.class,);
-//    }
 }

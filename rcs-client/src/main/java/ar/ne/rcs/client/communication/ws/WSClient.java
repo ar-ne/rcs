@@ -1,21 +1,20 @@
 package ar.ne.rcs.client.communication.ws;
 
-import ar.ne.rcs.client.RCSClient;
+import ar.ne.rcs.client.feature.RemoteShell;
 import ar.ne.rcs.shared.consts.MessageDestination;
 import ar.ne.rcs.shared.enums.registration.RegistrationResult;
-import ar.ne.rcs.shared.models.device.DeviceIdentifier;
 import ar.ne.rcs.shared.models.rc.ResultPartial;
 import ar.ne.rcs.shared.models.stores.JobStore;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.java.Log;
+
+import static ar.ne.rcs.client.feature.FeatureManager.MANAGER;
 
 @Log
 public class WSClient {
-    private static final ObjectMapper mapper = new ObjectMapper();
     public static volatile WSClient WS_CLIENT;
     private final WSConnection connection;
 
-    public WSClient(WSConnection connection) {
+    private WSClient(WSConnection connection) {
         this.connection = connection;
     }
 
@@ -30,13 +29,8 @@ public class WSClient {
                         log.info("Device registration success!");
                         return null;
                     });
-                    connection.send(dest,
-                            DeviceIdentifier.builder()
-                                    .androidId("AndroidID")
-                                    .imei("IMEI")
-                                    .serialNo("SERIAL_NO")
-                                    .build()
-                    );
+                    //send device identifier
+                    connection.send(dest, "DEVICE_IDENTIFIER");
                 },
                 () -> {
                     log.warning("Connect error, reconnecting...");
@@ -59,7 +53,7 @@ public class WSClient {
 
     public Void onJobReceived(JobStore jobStore) {
         System.out.println("New job received: " + jobStore.toString());
-        RCSClient.RCS_CLIENT.getExecutor().exec(jobStore.getJob(), this::sendResult, this::sendResult);
+        MANAGER.getFeature(RemoteShell.class).getExecutor().exec(jobStore.getJob(), this::sendResult, this::sendResult);
         return null;
     }
 }

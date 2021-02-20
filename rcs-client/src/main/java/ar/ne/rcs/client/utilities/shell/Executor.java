@@ -30,7 +30,7 @@ public abstract class Executor {
     abstract public Result exec(String command);
 
     /**
-     * run {@link Job}
+     * run {@link Job} in async
      *
      * @param job        the {@link Job} to run
      * @param onOutput   a {@link Function} called when new output

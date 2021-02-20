@@ -2,7 +2,6 @@ package ar.ne.rcs.server.serivce;
 
 import ar.ne.rcs.server.repo.JobRepo;
 import ar.ne.rcs.shared.consts.MessageDestination;
-import ar.ne.rcs.shared.models.device.DeviceIdentifier;
 import ar.ne.rcs.shared.models.rc.ResultPartial;
 import ar.ne.rcs.shared.models.stores.JobStore;
 import org.springframework.jms.core.JmsTemplate;
@@ -27,9 +26,9 @@ public class JobService extends BaseService {
      * This method will first create the job in db, then inform others there's new job
      *
      * @param command    command to run
-     * @param identifier device to run
+     * @param identifier device to run on
      */
-    public void create(String command, DeviceIdentifier identifier) {
+    public void create(String command, String identifier) {
         JobStore dbStore = repo.create(command, identifier);
         jmsTemplate.convertAndSend(MessageDestination.Fields.COMMAND_CREATE, dbStore);
     }
