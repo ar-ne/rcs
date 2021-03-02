@@ -26,8 +26,6 @@ allprojects {
 subprojects {
     apply plugin: 'maven-publish'
     group 'ar.ne.rcs'
-    sourceCompatibility = 1.8 // java 8
-    targetCompatibility = 1.8
     version = "0.0.1-SNAPSHOT"
 
     task sourceJar(type: Jar) {
@@ -36,8 +34,8 @@ subprojects {
     }
 
 
-    if (!["rcs-android"].contains(project.name)) {
-        println("add publiscation for $project.name")
+    if (!["rcs-android", "StompProtocolAndroid"].contains(project.name)) {
+        println("config publiscation for $project.name")
         apply plugin: 'java'
         publishing {
             publications {

@@ -1,17 +1,18 @@
 package ar.ne.rcs.android;
 
 import android.app.Activity;
-import android.content.pm.PackageManager;
+import android.content.Context;
 import ar.ne.rcs.android.features.AppWhitelist;
 import ar.ne.rcs.android.features.EnterpriseManagement;
+import ar.ne.rcs.android.features.RemoteControl;
 import ar.ne.rcs.android.shell.SuExecutor;
+import ar.ne.rcs.android.utils.DeviceIdentifier;
 import ar.ne.rcs.android.utils.SPAConnection;
 import ar.ne.rcs.client.RCSClient;
-import ar.ne.rcs.client.feature.Feature;
-import ar.ne.rcs.client.feature.FeatureConfigModel;
-import ar.ne.rcs.client.feature.FeatureManager;
-import ar.ne.rcs.client.feature.RemoteShell;
+import ar.ne.rcs.client.feature.*;
 import ar.ne.rcs.shared.models.configs.RCSAndroidConfigModel;
+import lombok.Getter;
+import lombok.extern.java.Log;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -19,11 +20,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 
+@Log
 public class AndroidFeatureManager extends FeatureManager {
+    @Getter
+    final Context appCtx;
     final RCSAndroidConfigModel config;
 
-    public AndroidFeatureManager(RCSAndroidConfigModel config) {
-        if (MANAGER != null) throw new RuntimeException("DO NOT　construct manager multiple time");
+    private AndroidFeatureManager(Context context, RCSAndroidConfigModel config) {
+        if (MANAGER != null) throw new RuntimeException("DO NOT initialize manager multiple time");
+        appCtx = context.getApplicationContext();
         this.config = config;
         MANAGER = this;
         enableFeature(
@@ -32,12 +37,31 @@ public class AndroidFeatureManager extends FeatureManager {
                         .executorClass(SuExecutor.class)
                         .build()
         );
-
-        //connect to server
-        RCSClient client = new RCSClient(
-                config.getCommunicationConfig(),
-                new SPAConnection(config.getCommunicationConfig().getWSUri())
+        enableFeature(
+                PredefinedFunctions.class,
+                new PredefinedFunctions.PredefinedFunctionsConfigModel()
         );
+        enableFeature(RemoteControl.class, RemoteControl.RemoteControlConfigModel.builder().build());
+
+        if (config != null) {
+            //connect to server
+            RCSClient client = new RCSClient(
+                    config.getCommunicationConfig(),
+                    new SPAConnection(config.getCommunicationConfig().getWSUri())
+            );
+        } else {
+            log.warning("communication disabled");
+        }
+    }
+
+    public static AndroidFeatureManager init(Context ctx, RCSAndroidConfigModel config) {
+        if (config != null)
+            config.setCommunicationConfig(config.getCommunicationConfig().toBuilder().deviceID(DeviceIdentifier.getIdentifier()).build());
+        return new AndroidFeatureManager(ctx, config);
+    }
+
+    public static AndroidFeatureManager init(Context ctx) {
+        return new AndroidFeatureManager(ctx, null);
     }
 
     @Override
@@ -46,7 +70,7 @@ public class AndroidFeatureManager extends FeatureManager {
     }
 
     @Override
-    public <T extends FeatureConfigModel> void enableFeature(Class<? extends Feature<? extends FeatureConfigModel>> feature, T config) {
+    public <T extends FeatureConfigModel> AndroidFeatureManager enableFeature(Class<? extends Feature<? extends FeatureConfigModel>> feature, T config) {
         try {
             Constructor<?>[] constructors = feature.getDeclaredConstructors();
             if (constructors.length != 1)
@@ -58,10 +82,11 @@ public class AndroidFeatureManager extends FeatureManager {
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
+        return this;
     }
 
-    public void enableEnterpriseManagement(Class<? extends Activity> restartActivity, String... passwords) {
-        enableFeature(
+    public AndroidFeatureManager enableEnterpriseManagement(Class<? extends Activity> restartActivity, String... passwords) {
+        return enableFeature(
                 EnterpriseManagement.class,
                 EnterpriseManagement.EnterpriseManagementConfigModel.builder()
                         .restartActivity(restartActivity)
@@ -70,11 +95,11 @@ public class AndroidFeatureManager extends FeatureManager {
         );
     }
 
-    public void enableAppWhitelist(Activity activity, PackageManager packageManager) {
-        enableFeature(
+    public AndroidFeatureManager enableAppWhitelist(Activity activity) {
+        return enableFeature(
                 AppWhitelist.class,
                 AppWhitelist.AppWhitelistConfigModel.builder()
-                        .packageManager(packageManager)
+                        .packageManager(activity.getPackageManager())
                         .allowedPkg(new HashSet<>(Collections.singletonList(activity.getPackageName())))
                         .reboot(true)
                         .build()

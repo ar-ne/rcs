@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
-import ar.ne.rcs.android.DPMReceiver;
 import ar.ne.rcs.android.AndroidFeatureManager;
+import ar.ne.rcs.android.DPMReceiver;
 import ar.ne.rcs.client.feature.Feature;
 import ar.ne.rcs.client.feature.FeatureConfigModel;
 import ar.ne.rcs.client.feature.RemoteShell;
@@ -40,7 +40,7 @@ public class EnterpriseManagement extends Feature<EnterpriseManagement.Enterpris
 
     @Override
     public Class<? extends Feature<EnterpriseManagementConfigModel>> getFeatureType() {
-        return this.getClass();
+        return EnterpriseManagement.class;
     }
 
     public void startLockTaskMode(Activity activity) {

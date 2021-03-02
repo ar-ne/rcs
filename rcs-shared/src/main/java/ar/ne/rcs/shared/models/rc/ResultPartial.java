@@ -11,14 +11,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResultPartial {
-    String content;
+    @Builder.Default
+    String content = "";
     /**
      * generated uuid
      * {@link JobStore#getId()}
      */
     String id;
     @Builder.Default
-    JobStatus currentStatus = JobStatus.RUNNING;
+    JobLifecycle currentStatus = JobLifecycle.RUNNING;
     /**
      * time of this {@link ResultPartial}
      */

@@ -1,4 +1,4 @@
-package ar.ne.rcs.client.communication;
+package ar.ne.rcs.client.communication.http;
 
 import ar.ne.rcs.shared.models.configs.CommunicationConfigModel;
 

@@ -25,26 +25,22 @@ public class DeviceRegistrationRepo {
 
 
     public DeviceRegistration register(String identifier, String id) {
-        //TODO: broadcast device online
         DeviceRegistration reg = DeviceRegistration.builder()
-                .deviceIdentifier(identifier)
-                .id(id)
+                .id(identifier)
+                .sessionId(id)
                 .build();
-        DeviceRegistration regByIdentifier = findByDeviceIdentifier(identifier);
-        if (regByIdentifier != null)
-            repo.delete(regByIdentifier);
-        repo.insert(reg);
+        repo.save(reg);
         log.debug("Device registered: {}", reg.toString());
         return reg;
     }
 
     @Nullable
     public DeviceRegistration findByDeviceIdentifier(String identifier) {
-        return mongo.findOne(Query.query(where("identifier").is(identifier)), DeviceRegistration.class);
+        return mongo.findOne(Query.query(where(DeviceRegistration.Fields.id).is(identifier)), DeviceRegistration.class);
     }
 
     @Nullable
-    public DeviceRegistration getBySessionId(String id) {
+    public DeviceRegistration findBySessionId(String id) {
         return repo.findById(id).orElse(null);
     }
 
@@ -53,10 +49,12 @@ public class DeviceRegistrationRepo {
     }
 
     public void unregister(String sessionId) {
-        log.debug("Device disconnected: sessionId = {}", sessionId);
-        repo.findById(sessionId).ifPresent(deviceRegistration -> {
-            repo.delete(deviceRegistration);
-            log.debug("Device disconnected: {}", deviceRegistration.toString());
-        });
+        repo.findById(sessionId).ifPresent(this::unregister);
+    }
+
+    public void unregister(DeviceRegistration deviceRegistration) {
+        log.debug("Device disconnected: registration = {}", deviceRegistration);
+        deviceRegistration.setSessionId(null);
+        repo.save(deviceRegistration);
     }
 }

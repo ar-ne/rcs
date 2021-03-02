@@ -26,7 +26,7 @@ public class RemoteShell extends Feature<RemoteShell.RemoteShellConfigModel> {
 
     @Override
     public Class<? extends Feature<RemoteShellConfigModel>> getFeatureType() {
-        return this.getClass();
+        return RemoteShell.class;
     }
 
     @Builder

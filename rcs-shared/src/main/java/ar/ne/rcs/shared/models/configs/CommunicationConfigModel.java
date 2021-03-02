@@ -1,14 +1,19 @@
 package ar.ne.rcs.shared.models.configs;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@Builder(toBuilder = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class CommunicationConfigModel {
     public String host;
     public int port;
-    public String deviceID;
+    @Builder.Default
+    public String deviceID = null;
 
     @Builder.Default
     public boolean httpSSL = false;
@@ -16,7 +21,8 @@ public class CommunicationConfigModel {
 
     @Builder.Default
     public boolean wsSSL = false;
-    public String wsEndpoint;
+    @Builder.Default
+    public String wsEndpoint = "ws/websocket";
 
 
     public String getAddress() {

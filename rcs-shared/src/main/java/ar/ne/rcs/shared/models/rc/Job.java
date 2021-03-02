@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * 在client上执行的命令
  */
@@ -15,6 +17,12 @@ import lombok.NoArgsConstructor;
 public class Job {
     String command;
     String id;
+    /**
+     * <p>if not null, job will execute at scheduled time</p>
+     * <p>otherwise, will execute immediately</p>
+     */
     @Builder.Default
-    JobStatus status = JobStatus.ADDED;
+    Date schedule = null;
+    @Builder.Default
+    JobType type = JobType.SHELL_COMMAND;
 }

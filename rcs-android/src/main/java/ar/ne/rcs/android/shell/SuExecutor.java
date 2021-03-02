@@ -3,7 +3,7 @@ package ar.ne.rcs.android.shell;
 import ar.ne.rcs.client.utilities.shell.Executor;
 import ar.ne.rcs.client.utilities.shell.Result;
 import ar.ne.rcs.shared.models.rc.Job;
-import ar.ne.rcs.shared.models.rc.JobStatus;
+import ar.ne.rcs.shared.models.rc.JobLifecycle;
 import ar.ne.rcs.shared.models.rc.ResultPartial;
 import com.topjohnwu.superuser.BusyBoxInstaller;
 import com.topjohnwu.superuser.CallbackList;
@@ -47,7 +47,7 @@ public class SuExecutor extends Executor {
             public void onAddElement(String s) {
                 onOutput.apply(ResultPartial.builder()
                         .id(job.getId())
-                        .currentStatus(JobStatus.RUNNING)
+                        .currentStatus(JobLifecycle.RUNNING)
                         .content(s)
                         .build());
             }
@@ -56,7 +56,7 @@ public class SuExecutor extends Executor {
                 .to(callbackList)
                 .submit(out -> onFinished.apply(ResultPartial.builder()
                         .id(job.getId())
-                        .currentStatus(JobStatus.FINISHED)
+                        .currentStatus(JobLifecycle.FINISHED)
                         .content(String.valueOf(out.getCode()))
                         .build()));
     }

@@ -29,9 +29,18 @@ public class DeviceRegistrationService extends BaseService {
         return repo.findByDeviceIdentifier(identifier);
     }
 
+    public DeviceRegistration findBySessionId(String sessionId) {
+        return repo.findBySessionId(sessionId);
+    }
+
     public void unregister(String sessionId) {
         repo.unregister(sessionId);
         jmsTemplate.convertAndSend(MessageDestination.Fields.DEVICE_OFFLINE, sessionId);
+    }
+
+    public void unregister(DeviceRegistration deviceRegistration) {
+        repo.unregister(deviceRegistration);
+        jmsTemplate.convertAndSend(MessageDestination.Fields.DEVICE_OFFLINE, deviceRegistration.getSessionId());
     }
 
     public List<DeviceRegistration> findAll() {

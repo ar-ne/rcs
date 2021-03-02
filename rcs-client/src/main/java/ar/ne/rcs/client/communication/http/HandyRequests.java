@@ -1,6 +1,5 @@
 package ar.ne.rcs.client.communication.http;
 
-import ar.ne.rcs.client.communication.HttpConfig;
 import ar.ne.rcs.shared.models.RemoteCommand;
 import ar.ne.rcs.shared.models.status.DeviceStatus;
 

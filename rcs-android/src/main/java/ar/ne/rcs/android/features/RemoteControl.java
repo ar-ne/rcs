@@ -5,6 +5,9 @@ import ar.ne.rcs.client.feature.Feature;
 import ar.ne.rcs.client.feature.FeatureConfigModel;
 import ar.ne.rcs.client.feature.RemoteShell;
 import ar.ne.rcs.client.utilities.shell.Executor;
+import ar.ne.rcs.shared.models.frp.FRPClient;
+import lombok.Builder;
+import lombok.Getter;
 
 //TODO: enable this
 public class RemoteControl extends Feature<RemoteControl.RemoteControlConfigModel> {
@@ -15,7 +18,7 @@ public class RemoteControl extends Feature<RemoteControl.RemoteControlConfigMode
 
     @Override
     public Class<? extends Feature<? extends FeatureConfigModel>> getFeatureType() {
-        return this.getClass();
+        return RemoteControl.class;
     }
 
     public void listen(int port) {
@@ -29,6 +32,12 @@ public class RemoteControl extends Feature<RemoteControl.RemoteControlConfigMode
         executor.exec("start adbd");
     }
 
+
+    @Getter
+    @Builder
     public static class RemoteControlConfigModel extends FeatureConfigModel {
+        FRPClient client;
+        @Builder.Default
+        int adbPort = 5555;
     }
 }

@@ -1,13 +1,13 @@
 <component name="ProjectRunConfigurationManager">
     <configuration name="start" default="false" nameIsGenerated="true" singleton="false" type="js.build_tools.npm">
-        <package-json value="$PROJECT_DIR$/rcs-front/app/package.json" />
+        <package-json value="$PROJECT_DIR$/rcs-front/app/package.json"/>
         <job value="run"/>
         <scripts>
-            <script value="start" />
+            <script value="start"/>
         </scripts>
-        <node-interpreter value="project" />
-        <package-manager value="yarn" />
-        <envs />
-        <method v="2" />
+        <node-interpreter value="project"/>
+        <package-manager value="yarn"/>
+        <envs/>
+        <method v="2"/>
     </configuration>
 </component>

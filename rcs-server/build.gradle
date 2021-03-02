@@ -16,6 +16,9 @@ ext {
     set('springBootAdminVersion', "2.3.1")
 }
 
+sourceCompatibility = 11
+targetCompatibility = 11
+
 dependencies {
     implementation project(path: ':rcs-shared')
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -58,5 +61,11 @@ configurations {
     [apiElements, runtimeElements].each {
         it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
         it.outgoing.artifact(bootJar)
+    }
+}
+
+task generateOpenApi() {
+    doFirst {
+        generateOpenApiDocs
     }
 }

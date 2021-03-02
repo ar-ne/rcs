@@ -20,6 +20,7 @@ public class Cronjob {
 
     public static void runOnce(Runnable task, Date date) {
         Timer t = new Timer();
+        if (date == null) date = new Date();
         t.schedule(new TimerTask() {
             @Override
             public void run() {

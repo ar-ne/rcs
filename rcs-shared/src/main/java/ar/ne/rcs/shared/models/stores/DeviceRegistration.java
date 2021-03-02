@@ -1,9 +1,11 @@
 package ar.ne.rcs.shared.models.stores;
 
+import ar.ne.rcs.shared.models.devices.DeviceInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldNameConstants;
 
 import java.util.Date;
 
@@ -11,8 +13,12 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldNameConstants
 public class DeviceRegistration {
-    String deviceIdentifier;
+    /**
+     * Device Identifier
+     */
+    String id;
     /**
      * last register time
      */
@@ -21,5 +27,6 @@ public class DeviceRegistration {
     /**
      * websocket session id
      */
-    String id;
+    String sessionId;
+    DeviceInfo info;
 }

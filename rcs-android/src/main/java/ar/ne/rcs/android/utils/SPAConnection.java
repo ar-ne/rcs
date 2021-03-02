@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import lombok.SneakyThrows;
 import lombok.extern.java.Log;
 import ua.naiksoftware.stomp.Stomp;
 import ua.naiksoftware.stomp.StompClient;
@@ -13,41 +14,38 @@ import java.util.function.Function;
 
 @Log
 public class SPAConnection extends WSConnection {
-    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
-    ObjectMapper mapper = new ObjectMapper();
-    private StompClient mStompClient;
+    static {
+        io.reactivex.plugins.RxJavaPlugins.setErrorHandler(Throwable::printStackTrace);
+        io.reactivex.rxjava3.plugins.RxJavaPlugins.setErrorHandler(Throwable::printStackTrace);
+    }
 
+    private final CompositeDisposable compositeDisposable;
+    private final StompClient mStompClient;
+    ObjectMapper mapper = new ObjectMapper();
 
     /**
      * @param uri the uri to connect, make sure it's a STOMP uri
      */
     public SPAConnection(String uri) {
         super(uri);
+        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, endpoint);
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
     public void connect() {
-        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, endpoint);
         Disposable lifecycleDisposable = mStompClient.lifecycle()
                 .subscribe(lifecycleEvent -> {
+                    log.info("Received lifecycle event: " + lifecycleEvent.getType());
                     switch (lifecycleEvent.getType()) {
                         case OPENED:
-                            new Thread(onConnected).start();
                             log.info("Stomp connection opened");
-                            break;
-                        case ERROR:
-                            new Thread(onError).start();
-                            log.warning("Stomp connection error");
-                            lifecycleEvent.getException().printStackTrace();
+                            new Thread(onConnected).start();
                             break;
                         case CLOSED:
-                            new Thread(onError).start();
                             log.info("Stomp connection closed");
-                            compositeDisposable.dispose();
-                            break;
-                        case FAILED_SERVER_HEARTBEAT:
+                            Thread.sleep(100000);
                             new Thread(onError).start();
-                            log.warning("Stomp failed server heartbeat");
                             break;
                     }
                 });
@@ -55,10 +53,13 @@ public class SPAConnection extends WSConnection {
         mStompClient.connect();
     }
 
+    @SneakyThrows
     @Override
     public void reconnect() {
         compositeDisposable.clear();
-        mStompClient.disconnect();
+
+        log.info("Reconnecting...currently client:" + mStompClient.hashCode());
+        connect();
     }
 
     @Override
@@ -76,7 +77,10 @@ public class SPAConnection extends WSConnection {
     @Override
     public void send(String dest, Object data) {
         try {
-            mStompClient.send(String.format("/topic/%s", dest), mapper.writeValueAsString(data)).blockingAwait();
+            if (data.getClass().equals(String.class))
+                mStompClient.send(String.format("/topic/%s", dest), (String) data).blockingAwait();
+            else
+                mStompClient.send(String.format("/topic/%s", dest), mapper.writeValueAsString(data)).doOnError(throwable -> onError.run()).blockingAwait();
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

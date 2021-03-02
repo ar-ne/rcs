@@ -8,11 +8,11 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class RPC {
+public class RCWebsocketController {
 
     final JobService service;
 
-    public RPC(JobService service) {
+    public RCWebsocketController(JobService service) {
         this.service = service;
     }
 

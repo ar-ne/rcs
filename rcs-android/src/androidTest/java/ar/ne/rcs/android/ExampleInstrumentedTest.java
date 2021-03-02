@@ -1,8 +1,11 @@
 package ar.ne.rcs.android;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import android.telephony.TelephonyManager;
+import ar.ne.rcs.android.utils.DeviceIdentifier;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -20,5 +23,21 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("ar.ne.rcs.test", appContext.getPackageName());
+    }
+
+    @Test
+    public void iTest() throws InterruptedException {
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        TelephonyManager telephonyManager = (TelephonyManager) appContext.getSystemService(Context.TELEPHONY_SERVICE);
+
+        AndroidFeatureManager.init(appContext.getApplicationContext());
+    }
+
+
+    @Test
+    public void serialTest() throws InterruptedException {
+        iTest();
+        System.out.println(DeviceIdentifier.getIdentifier());
+        System.out.println(Build.SERIAL);
     }
 }

@@ -111,7 +111,7 @@ public class AppWhitelist extends Feature<AppWhitelist.AppWhitelistConfigModel> 
 
     @Override
     public Class<? extends Feature<? extends FeatureConfigModel>> getFeatureType() {
-        return this.getClass();
+        return AppWhitelist.class;
     }
 
     @Getter

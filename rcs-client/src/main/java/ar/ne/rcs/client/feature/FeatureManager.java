@@ -5,5 +5,5 @@ public abstract class FeatureManager {
 
     public abstract <T extends Feature<? extends FeatureConfigModel>> T getFeature(Class<T> featureType);
 
-    public abstract <T extends FeatureConfigModel> void enableFeature(Class<? extends Feature<? extends FeatureConfigModel>> feature, T config);
+    public abstract <T extends FeatureConfigModel> FeatureManager enableFeature(Class<? extends Feature<? extends FeatureConfigModel>> feature, T config);
 }

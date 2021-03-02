@@ -1,10 +1,13 @@
 package ar.ne.rcs.client.communication.ws;
 
+import ar.ne.rcs.client.feature.PredefinedFunctions;
 import ar.ne.rcs.client.feature.RemoteShell;
+import ar.ne.rcs.client.utilities.Cronjob;
 import ar.ne.rcs.shared.consts.MessageDestination;
 import ar.ne.rcs.shared.enums.registration.RegistrationResult;
+import ar.ne.rcs.shared.models.rc.Job;
+import ar.ne.rcs.shared.models.rc.JobLifecycle;
 import ar.ne.rcs.shared.models.rc.ResultPartial;
-import ar.ne.rcs.shared.models.stores.JobStore;
 import lombok.extern.java.Log;
 
 import static ar.ne.rcs.client.feature.FeatureManager.MANAGER;
@@ -18,32 +21,40 @@ public class WSClient {
         this.connection = connection;
     }
 
-    public static WSClient init(WSConnection connection) {
+    public static void init(WSConnection connection, String identifier) {
         connection.connect(
+                //on success event
                 () -> {
                     String dest = MessageDestination.Fields.DEVICE_REGISTRATION;
                     connection.subscribe(dest, true, RegistrationResult.class, (payload) -> {
-                        if (!payload.equals(RegistrationResult.ACCEPT)) {
+                        if (payload.equals(RegistrationResult.ACCEPT))
+                            log.info("Device registration success!");
+                        else
                             log.warning("Device registration failed!");
-                        }
-                        log.info("Device registration success!");
+
+                        //set WS_CLIENT instance
+                        WS_CLIENT = new WSClient(connection);
+                        WS_CLIENT.onConnected();
                         return null;
                     });
                     //send device identifier
-                    connection.send(dest, "DEVICE_IDENTIFIER");
+                    connection.send(dest, identifier);
                 },
+
+                //on error event
                 () -> {
-                    log.warning("Connect error, reconnecting...");
+                    log.warning("Disconnected, reconnecting...");
                     connection.reconnect();
                 }
         );
-        WS_CLIENT = new WSClient(connection);
-        WS_CLIENT.subscribeForJob();
-        return WS_CLIENT;
+    }
+
+    private void onConnected() {
+        subscribeForJob();
     }
 
     private void subscribeForJob() {
-        connection.subscribe(MessageDestination.Fields.COMMAND_CREATE, true, JobStore.class, this::onJobReceived);
+        connection.subscribe(MessageDestination.Fields.COMMAND_CREATE, true, Job.class, this::onJobReceived);
     }
 
     public Void sendResult(ResultPartial rp) {
@@ -51,9 +62,23 @@ public class WSClient {
         return null;
     }
 
-    public Void onJobReceived(JobStore jobStore) {
-        System.out.println("New job received: " + jobStore.toString());
-        MANAGER.getFeature(RemoteShell.class).getExecutor().exec(jobStore.getJob(), this::sendResult, this::sendResult);
+    public Void onJobReceived(Job job) {
+        System.out.println("New job received: " + job.toString());
+        sendResult(ResultPartial.builder().id(job.getId()).currentStatus(JobLifecycle.WAITING).build());
+        Runnable runnable = null;
+        switch (job.getType()) {
+            case SHELL_COMMAND:
+                runnable = () -> MANAGER.getFeature(RemoteShell.class).getExecutor().exec(job, this::sendResult, this::sendResult);
+                break;
+            case PREDEFINED_FUNCTION:
+                runnable = () -> MANAGER.getFeature(PredefinedFunctions.class).callFunction(job.getCommand(), null);
+                break;
+        }
+
+        if (runnable != null)
+            Cronjob.runOnce(runnable, job.getSchedule());
+
         return null;
     }
+
 }

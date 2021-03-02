@@ -1,4 +1,4 @@
-plugins{
+plugins {
     id 'com.android.library'
     id 'digital.wup.android-maven-publish' version '3.6.2'
 }
@@ -55,19 +55,22 @@ dependencies {
     implementation "com.github.topjohnwu.libsu:io:${libsuVersion}"
     implementation "com.github.topjohnwu.libsu:busybox:${libsuVersion}"
 
-    implementation 'com.github.NaikSoftware:StompProtocolAndroid:1.6.6'
+    implementation 'com.github.ar-ne:StompProtocolAndroid:1.6.6arnefix'
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.9'
-    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.5'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+
 
     implementation 'com.fasterxml.jackson.core:jackson-core:2.11.3'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.3'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.11.3'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.3'
     implementation 'com.fasterxml.jackson.module:jackson-module-parameter-names:2.11.3'
+
+    implementation 'com.uber.rxdogtag2:rxdogtag:2.0.0'
 }
 
 publishing {

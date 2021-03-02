@@ -20,4 +20,6 @@ public class JobMetadata {
     String deviceIdentifier;
     @Builder.Default
     Integer exitCode = null;
+    @Builder.Default
+    JobLifecycle status = JobLifecycle.ADDED;
 }

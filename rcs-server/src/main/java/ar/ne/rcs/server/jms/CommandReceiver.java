@@ -19,15 +19,14 @@ public class CommandReceiver extends BaseReceiver {
         this.service = service;
     }
 
+    @SuppressWarnings("deprecation")
     @JmsListener(destination = COMMAND_UPDATE_RESULT, concurrency = "1")
     public void update(ResultPartial resultPartial) {
-        System.out.println("Received <" + resultPartial + ">");
-        service.update(resultPartial);
+        service.save(resultPartial);
     }
 
     @JmsListener(destination = COMMAND_CREATE)
     public void create(JobStore store) {
-        System.out.println("Received <" + store + ">");
         wsService.broadcast(COMMAND_CREATE, store);
         wsService.sendToUser(store.getMetadata().getDeviceIdentifier(), COMMAND_CREATE, store);
     }
