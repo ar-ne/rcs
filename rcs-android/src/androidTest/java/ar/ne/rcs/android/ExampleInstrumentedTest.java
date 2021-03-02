@@ -5,9 +5,12 @@ import android.os.Build;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.telephony.TelephonyManager;
+import ar.ne.rcs.android.functions.PkgManager;
 import ar.ne.rcs.android.utils.DeviceIdentifier;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.io.File;
 
 import static org.junit.Assert.assertEquals;
 
@@ -26,7 +29,7 @@ public class ExampleInstrumentedTest {
     }
 
     @Test
-    public void iTest() throws InterruptedException {
+    public void iTest() {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         TelephonyManager telephonyManager = (TelephonyManager) appContext.getSystemService(Context.TELEPHONY_SERVICE);
 
@@ -34,10 +37,17 @@ public class ExampleInstrumentedTest {
     }
 
 
+    @SuppressWarnings("deprecation")
     @Test
-    public void serialTest() throws InterruptedException {
+    public void serialTest() {
         iTest();
         System.out.println(DeviceIdentifier.getIdentifier());
         System.out.println(Build.SERIAL);
+    }
+
+    @Test
+    public void installTest(){
+        iTest();
+        PkgManager.install(new File("/data/local/tmp/2_wxt_classBrand.apk"));
     }
 }

@@ -1,8 +1,9 @@
 package ar.ne.rcs.android.functions;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.StrictMode;
+import ar.ne.rcs.android.AndroidFeatureManager;
 import ar.ne.rcs.client.feature.RemoteShell;
 import ar.ne.rcs.client.utilities.shell.Result;
 
@@ -10,10 +11,13 @@ import java.io.File;
 
 import static ar.ne.rcs.client.feature.FeatureManager.MANAGER;
 
-public class AppManager {
+public class PkgManager {
+    static {
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+    }
 
-
-    public static void install(File apkFile, Context context) {
+    public static void install(File apkFile) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         // 由于没有在Activity环境下启动Activity,设置下面的标签
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -22,7 +26,7 @@ public class AppManager {
         //添加这一句表示对目标应用临时授权该Uri所代表的文件
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
-        context.startActivity(intent);
+        ((AndroidFeatureManager) MANAGER).getAppCtx().startActivity(intent);
     }
 
     public static int uninstall(String packageName) {
