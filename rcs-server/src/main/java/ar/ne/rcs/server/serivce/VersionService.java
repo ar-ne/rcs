@@ -2,6 +2,7 @@ package ar.ne.rcs.server.serivce;
 
 import ar.ne.rcs.server.repo.DeviceRegistrationRepo;
 import ar.ne.rcs.server.repo.mongo.MongoVersionRepo;
+import ar.ne.rcs.shared.models.common.VersionInfo;
 import ar.ne.rcs.shared.models.stores.DeviceRegistration;
 import ar.ne.rcs.shared.models.stores.VersionStore;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ public class VersionService {
     public VersionService(MongoVersionRepo repo, DeviceRegistrationRepo deviceRegistrationRepo) {
         this.repo = repo;
         this.deviceRegistrationRepo = deviceRegistrationRepo;
+        repo.save(new VersionStore(DEFAULT_VERSION_GROUP, new VersionInfo(-1, null)));
     }
 
     public VersionStore findByVersionGroup(String versionGroup) {
@@ -25,7 +27,7 @@ public class VersionService {
     }
 
     public VersionStore findByDevice(String identifier) {
-        VersionStore versionStore = repo.findById(DEFAULT_VERSION_GROUP).orElse(null);
+        VersionStore versionStore = repo.findById(DEFAULT_VERSION_GROUP).orElseThrow();
         DeviceRegistration deviceRegistration = deviceRegistrationRepo.findByDeviceIdentifier(identifier);
         if (deviceRegistration == null || deviceRegistration.getInfo() == null) return versionStore;
         return repo.findById(deviceRegistration.getInfo().getVersionGroup()).orElse(versionStore);
